@@ -14,8 +14,8 @@ fs.readFile(file,'utf-8',(err,data) => {
 }
 
 //Method to save file
-Obj.save = (file,db) => {
-    fs.writeFile(file,db,(err) => {
+Obj.save = (filename,db) => {
+    fs.writeFile(filename,db,(err) => {
         if(err){
             console.log(err)
         } else {
@@ -39,6 +39,7 @@ Obj.record = (table,record) => {
     return table.trim().split('\r\n').slice(1).map((e,i) => e.split(','))[record]
 }
 
+//Add a record (row)
 Obj.addRecord = (db,inputArray) => {
     let output = inputArray.reduce((db,e,i) => {
         if(i === 0){
@@ -50,6 +51,7 @@ Obj.addRecord = (db,inputArray) => {
     return output + '\r\n'
 }
 
+//Add multiple records (rows)
 Obj.addRecords = (db,recordArray) => {
     let output = db + recordArray.reduce((sum,e,i) => {
         return Obj.addRecord(sum,e)
@@ -57,9 +59,22 @@ Obj.addRecords = (db,recordArray) => {
     return output
 }
 
+//remove a record (row)
+Obj.removeRecord = (db,index) => {
+    db = db.splice(index,1)
+    return db
+}
 
+//Add a column (header)
+Obj.addColumn = (db,columnName) => {
+
+}
+
+//------------------------------------------------------
+
+//Test Functions
 let run = (data) => {
-    let output = Obj.addRecords(data,[['this','is','another','test'],['this','is','so','cool']])
+    let output = data
     console.log(output)
 }
 
