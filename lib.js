@@ -40,10 +40,10 @@ Obj.record = (table,record) => {
 }
 
 //Make an array report numbered (For user selection later)
-Obj.numArray = (array) => {
-    return array.map((e,i) => {
-        return i + "-" + e
-    })
+Obj.renderArray = (array) => {
+    return array.reduce((sum,e,i) => {
+        return sum + '\r\n' + i + " - " +'['+ e + ']'
+    },"")
 }
 
 //Add a record (row)
@@ -83,11 +83,21 @@ Obj.addColumn = (db,columnName) => {
     return headers + records
 }
 
+//Search array
+Obj.search = (data,searchTerm) => {
+    return Obj.records(data).map((e,i) => e.toString()).filter((e) => e.toUpperCase().indexOf(searchTerm.toUpperCase()) > -1)
+}
+
+// //Search Specific Column
+// Obj.searchCol = (db,column,searchTerm) => {
+//     return Obj.search(Obj.column(dataObj,column),searchTerm)
+// }
+
 //------------------------------------------------------
 
 //Test Functions
 let run = (data) => {
-    let output = Obj.addColumn(data,"test")
+    let output =data
     console.log(output)
 }
 
