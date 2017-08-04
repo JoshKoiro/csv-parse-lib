@@ -39,6 +39,13 @@ Obj.record = (table,record) => {
     return table.trim().split('\r\n').slice(1).map((e,i) => e.split(','))[record]
 }
 
+//Make an array report numbered (For user selection later)
+Obj.numArray = (array) => {
+    return array.map((e,i) => {
+        return i + "-" + e
+    })
+}
+
 //Add a record (row)
 Obj.addRecord = (db,inputArray) => {
     let output = inputArray.reduce((db,e,i) => {
@@ -67,14 +74,20 @@ Obj.removeRecord = (db,index) => {
 
 //Add a column (header)
 Obj.addColumn = (db,columnName) => {
-
+    let records = Obj.records(db).reduce((sum,e,i) => {
+        return sum + '\r\n' + e
+    },"")
+    let headers = Obj.headers(db).reduce((sum,e,i) => {
+        return sum + "," + e
+    }) + "," + columnName
+    return headers + records
 }
 
 //------------------------------------------------------
 
 //Test Functions
 let run = (data) => {
-    let output = data
+    let output = Obj.addColumn(data,"test")
     console.log(output)
 }
 
