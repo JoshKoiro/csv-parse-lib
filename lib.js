@@ -96,11 +96,13 @@ Obj.search = (data,searchTerm) => {
 //------------------------------------------------------
 
 //Test Functions
-let run = (data) => {
-    let output =data
-    console.log(output)
-}
+// let run = (data) => {
+//     let output =data
+//     console.log(output)
+// }
 
-Obj.load('./test.csv',run)
+// Obj.load('./test.csv',run)
+
+//----------------------------------------------------
 
 module.exports = Obj
