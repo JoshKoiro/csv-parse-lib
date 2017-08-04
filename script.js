@@ -4,7 +4,10 @@ const vorpal = require('vorpal')();
 //Test Function
 vorpal
   .command('load [string]', 'loads file".')
-  .action((args,callback) => csv.load(args.string,run))
+  .action((args,callback) => () => {
+      csv.run(args.string,run)
+      callback()
+})
 
 //Generate Function
   vorpal
@@ -21,8 +24,8 @@ vorpal
   .delimiter('csv-editor >>')
   .show();
 
-let run = (db,data) => {
-    let output = csv.renderArray(csv.records(csv.addRecord(db,['test','this'])))
+let run = (file,data) => {
+   let output = csv.load(file)
     console.log(output)
 }
 
