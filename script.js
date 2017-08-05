@@ -1,18 +1,37 @@
 const csv = require('./lib.js')
 const vorpal = require('vorpal')();
 
+let log = (data) => vorpal.log('\r\n' + data)
+
 //Test Function
 vorpal
   .command('load [string]', 'loads file".')
-  .action((args,callback) => () => {
-      csv.run(args.string,run)
-      callback()
-})
+  .action((args,callback) => {
+    vorpal.localStorage.setItem('data',load(args.string))
+    callback()
+  })
 
 //Generate Function
   vorpal
-    .command('generate [string]', 'Outputs "outputs argument".')
-    .action((args,callback) => f.generate(args,callback))
+    .command('select [recordIndex]', 'Selects records of data')
+    .action((args,callback) => {
+      let file = global.getItem('data')
+      if(args.recordIndex){
+        log(csv.record(file,args.recordIndex))
+        callback()
+      } else {
+        log(csv.records(file))
+        callback()
+      }
+    })
+
+    //Another Function
+  vorpal
+    .command('view [string]', 'view file data')
+    .action((args,callback) => {
+      vorpal.log(vorpal.localStorage.getItem('data'))
+      callback()
+    })
 
 //Another Function
   vorpal
@@ -24,9 +43,9 @@ vorpal
   .delimiter('csv-editor >>')
   .show();
 
-let run = (file,data) => {
-   let output = csv.load(file)
-    console.log(output)
+let load = (args) => {
+   file = csv.load(args.string,(data) => data)
+      return file
 }
 
 
